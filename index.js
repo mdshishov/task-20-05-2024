@@ -74,6 +74,17 @@ const countDirectories = (tree) => {
   return 1 + _.sum(t.getChildren(tree).map((child) => countDirectories(child)));
 };
 
+const countFilesInDirectory = (tree) => {
+  if (t.isDirectory(tree)) {
+    const name = t.getName(tree);
+    const childrenCount = t.getChildren(tree)
+      .filter((child) => t.isFile(child))
+      .length;
+    console.log(`${name}: ${childrenCount}`);
+    t.getChildren(tree).forEach((child) => {countFilesInDirectory(child)});
+  }
+};
+
 console.log(tree);
 printTree(tree);
 
@@ -84,4 +95,6 @@ printTreeWithParam(newTree, 'owner');
 console.log(countAll(tree));
 console.log(countFiles(tree));
 console.log(countDirectories(tree));
+
+countFilesInDirectory(tree);
 
